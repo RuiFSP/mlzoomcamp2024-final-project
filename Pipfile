@@ -13,6 +13,9 @@ keras = "*"
 tensorflow = "*"
 scikit-learn = "*"
 scikeras = "*"
+plot-model = "*"
+pydot = "*"
+graphviz = "*"
 
 [dev-packages]
 ipykernel = "*"
