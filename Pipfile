@@ -16,6 +16,7 @@ scikeras = "*"
 plot-model = "*"
 pydot = "*"
 graphviz = "*"
+shap = "*"
 
 [dev-packages]
 ipykernel = "*"
