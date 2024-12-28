@@ -41,12 +41,15 @@ def read_and_concatenate_csv_files(seasons, directory, columns):
     for season in seasons:
         file_path = os.path.join(directory, f"premier_league_{season}.csv")
         try:
-            df = pd.read_csv(file_path, usecols=columns, encoding='utf-8')  # usecols is a valid parameter
+            df = pd.read_csv(file_path, usecols=columns, encoding='utf-8')  
+            # Convert the Date column to strings and update the year format
+            df["Date"] = df["Date"].astype(str).apply(lambda x: x if len(x.split('/')[-1]) == 4 else x[:-2] + "20" + x[-2:])
+            
             df["Season"] = "20" + season[:2]
             dfs.append(df)
         except pd.errors.ParserError as e:
             print(f"Error parsing {file_path}: {str(e)}")
-    return pd.concat(dfs, ignore_index=True)
+    return pd.concat(dfs, ignore_index=True).dropna()
 
 def save_dataframe_to_csv(df, path):  # dataframe is a valid term
     df.to_csv(path, index=False)
