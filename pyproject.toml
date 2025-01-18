@@ -1,0 +1,18 @@
+[project]
+name = "mlzoomcamp2024-final-project"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.10.12"
+dependencies = [
+    "keras>=3.8.0",
+    "numpy>=2.2.1",
+    "requests>=2.32.3",
+    "scikit-learn>=1.6.1",
+]
+
+[dependency-groups]
+dev = [
+    "pandas>=2.2.3",
+    "tensorboard>=2.18.0",
+]
