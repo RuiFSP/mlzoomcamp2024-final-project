@@ -5,6 +5,7 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.10.12"
 dependencies = [
+    "flask>=3.1.0",
     "keras>=3.8.0",
     "keras-tuner>=1.4.7",
     "numpy==1.26.4",
