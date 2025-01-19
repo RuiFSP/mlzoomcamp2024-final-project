@@ -1,14 +1,14 @@
 # Use the official Python image from the Docker Hub
-FROM python:3.12-slim
+FROM python:3.10-slim
 
-# Install pipenv
-RUN pip install pipenv
+# Install uv
+RUN pip install uv
 
 # Set a working directory to copy files
 WORKDIR /app
 
 # Copy only the Pipfile and Pipfile.lock to take advantage of Docker caching
-COPY ["Pipfile", "Pipfile.lock", "./"]
+COPY ["pyproject.toml", "uv.lock", "./"]
 
 # Install only production dependencies (with --deploy to ensure strict dependency resolution)
 RUN pipenv install --system --deploy

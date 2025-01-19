@@ -172,3 +172,4 @@ cython_debug/
 
 # ignor elogs in notebooks folder
 notebooks/logs/
+notebooks/tuner_dir/

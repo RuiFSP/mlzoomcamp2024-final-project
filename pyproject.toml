@@ -6,13 +6,18 @@ readme = "README.md"
 requires-python = ">=3.10.12"
 dependencies = [
     "keras>=3.8.0",
-    "numpy>=2.2.1",
+    "keras-tuner>=1.4.7",
+    "numpy==1.26.4",
     "requests>=2.32.3",
     "scikit-learn>=1.6.1",
+    "tensorflow==2.18.0",
 ]
 
 [dependency-groups]
 dev = [
+    "matplotlib>=3.10.0",
     "pandas>=2.2.3",
+    "scikit-optimize>=0.10.2",
+    "seaborn>=0.13.2",
     "tensorboard>=2.18.0",
 ]
