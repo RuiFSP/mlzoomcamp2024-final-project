@@ -20,7 +20,7 @@ This project aims to predict the outcomes of Premier League football matches usi
     - [02\_data\_preparation](#02_data_preparation)
     - [03\_eda](#03_eda)
     - [04\_train\_model](#04_train_model)
-    - [05\_back\_testing](#05_back_testing)
+    - [05\_predict](#05_predict)
   - [Getting Started](#getting-started)
     - [Prerequisites](#prerequisites)
     - [Clone the Repository](#clone-the-repository)
@@ -124,44 +124,26 @@ For more details, see the [03_data_eda.py](scripts/03_data_eda.py) script.
 
 The `04_train_model.py` script covers the following key steps:
 
-- **Data Preprocessing**: Prepare the data for modeling.
-- **Feature Selection**: Use Recursive Feature Elimination with Cross-Validation (RFECV) to select important features.
-
-![rfccv_results](images/RFCCV.png)
-
-Check documentation about RFECV in: [Scikit_learn-RFECV](https://scikit-learn.org/1.5/modules/generated/sklearn.feature_selection.RFECV.html)
-
-![feature_importance](images/feature_importance.png)
-
-- **Model Evaluation**: Evaluate models using RandomForest and XGBoost classifiers.
-
-> For example, here the model was overfitting in training data
-
-![model_evaluation](images/learning_curves_xgboost_overfiting.png)
-
-- **Hyperparameter Tuning**: Tune hyperparameters to reduce overfitting.
-
-> After hyperparameter tuning we were able to decrease overfitting
-
-![hyperparameter_tuning](images/learning_curves_xgboost_tuning_improved.png)
-
-- **Model Finalization**: Finalize the best model using a pipeline and save it for future predictions.
+- **Data Preprocessing**: Load and preprocess the data, including encoding categorical features and scaling numerical features.
+- **Data Splitting**: Split the data into training and test sets.
+- **Class Weights Calculation**: Compute class weights to handle imbalanced datasets.
+- **Model Building**: Build a Keras model with hyperparameter tuning using Keras Tuner.
+- **Hyperparameter Tuning**: Perform hyperparameter tuning to find the best model configuration.
+- **Model Evaluation**: Evaluate the best model on the test set.
+- **Model Saving**: Save the best model and preprocessing objects for future use.
 
 For more details, see the [04_train_model.py](scripts/04_train_model.py) script.
 
-### 05_back_testing
+### 05_predict
 
-The `05_back_testing_market.py` script includes the following key steps:
+The `05_predict.py` script includes the following key steps:
 
-- **Loading the Model and Data**: Load the trained model and test datasets.
-- **Making Predictions**: Generate predictions and prediction probabilities using the model.
-- **Preparing Data for Analysis**: Combine predictions with actual results and market probabilities.
-- **Calculating Brier Scores**: Compute Brier scores for both the model's predictions and the market probabilities.
-- **Comparing Performance**: Compare the average Brier scores of the model and the market.
+- **Loading the Model and Data**: Load the trained model and preprocessing objects.
+- **Setting Up Flask App**: Set up a Flask app to handle prediction requests.
+- **Prediction Endpoint**: Define an endpoint to receive match data and return predictions.
+- **Health Check Endpoint**: Define an endpoint to check the health status of the service.
 
-![brier_score_differences](images/brier_score_diff.png)
-
-For more details, see the [05_back_testing_market.py](scripts/05_back_testing_market.py) script.
+For more details, see the [05_predict.py](scripts/05_predict.py) script.
 
 ## Getting Started
 
@@ -176,15 +158,8 @@ For more details, see the [05_back_testing_market.py](scripts/05_back_testing_ma
 Use `git clone` to copy the repository to your local machine and navigate into the project directory.
 
 ```bash
-  git clone <repository-url>
-  cd repository
-```
-
-Replace `repository-url` with the actual URL of the repository (for example, from GitHub, GitLab, etc.)
-
-```bash
-  git clone https://github.com/username/repository.git
-  cd repository
+  git clone git@github.com:RuiFSP/mlzoomcamp2024-final-project.git>
+  cd mlzoomcamp2024-final-project
 ```
 
 ### Installing Dependencies

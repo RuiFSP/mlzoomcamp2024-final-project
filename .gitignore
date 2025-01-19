@@ -170,6 +170,10 @@ cython_debug/
 # PyPI configuration file
 .pypirc
 
-# ignor elogs in notebooks folder
+# ignore logs in notebooks folder
 notebooks/logs/
 notebooks/tuner_dir/
+
+# ignore logs in notebooks folder
+scripts/logs/
+scripts/tuner/
