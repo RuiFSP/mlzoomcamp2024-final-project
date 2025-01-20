@@ -21,6 +21,7 @@ This project aims to predict the outcomes of Premier League football matches usi
     - [03\_eda](#03_eda)
     - [04\_train\_model](#04_train_model)
     - [05\_predict](#05_predict)
+    - [06\_back\_testing\_market](#06_back_testing_market)
   - [Getting Started](#getting-started)
     - [Prerequisites](#prerequisites)
     - [Clone the Repository](#clone-the-repository)
@@ -142,8 +143,27 @@ The `05_predict.py` script includes the following key steps:
 - **Setting Up Flask App**: Set up a Flask app to handle prediction requests.
 - **Prediction Endpoint**: Define an endpoint to receive match data and return predictions.
 - **Health Check Endpoint**: Define an endpoint to check the health status of the service.
+- **Input Validation**: Validate the input data for required fields and correct formats.
+- **Feature Engineering**: Generate features from the input data, including date-related features.
+- **Preprocessing**: Apply the same preprocessing steps used during model training.
+- **Prediction**: Use the trained model to predict match outcomes and probabilities.
+- **Response Formatting**: Format the prediction results into a JSON response.
 
 For more details, see the [05_predict.py](scripts/05_predict.py) script.
+
+### 06_back_testing_market
+
+The `06_back_testing_market.py` script includes the following key steps:
+
+- **Loading Data**: Load the processed data for back-testing.
+- **Loading Model and Transformers**: Load the trained model and preprocessing objects.
+- **Data Preprocessing**: Preprocess the data and split it into training and testing sets.
+- **Predicting Results**: Use the trained model to predict match outcomes and probabilities.
+- **Creating Team Names DataFrame**: Create a DataFrame to store team names, true results, predicted results, and probabilities.
+- **Calculating Brier Scores**: Calculate the Brier scores for the market and the model to evaluate prediction accuracy.
+
+For more details, see the [06_back_testing_market.py](scripts/06_back_testing_market.py) script.
+
 
 ## Getting Started
 
