@@ -4,7 +4,7 @@ headers = {"Content-Type": "application/json"}
 
 
 match_data = {
-    "home_team": "arsenal",
+    "home_team": "newcastle",
     "away_team": "liverpool",
     "date": "2024-12-16"
 }

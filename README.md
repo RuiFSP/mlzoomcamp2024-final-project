@@ -16,12 +16,12 @@ This project aims to predict the outcomes of Premier League football matches usi
     - [Draws (D)](#draws-d)
   - [Key Observations](#key-observations)
   - [Scripts](#scripts)
-    - [01\_data\_gathering](#01_data_gathering)
-    - [02\_data\_preparation](#02_data_preparation)
-    - [03\_eda](#03_eda)
-    - [04\_train\_model](#04_train_model)
-    - [05\_predict](#05_predict)
-    - [06\_back\_testing\_market](#06_back_testing_market)
+    - [data\_gathering](#data_gathering)
+    - [data\_preparation](#data_preparation)
+    - [eda](#eda)
+    - [train\_model](#train_model)
+    - [predict](#predict)
+    - [back\_testing\_market](#back_testing_market)
   - [Getting Started](#getting-started)
     - [Prerequisites](#prerequisites)
     - [Clone the Repository](#clone-the-repository)
@@ -84,9 +84,9 @@ The raw data for this project is sourced from [Football Data](https://www.footba
 
 ## Scripts
 
-### 01_data_gathering
+### data_gathering
 
-The `01_data_gathering.py` script performs the following key steps:
+The `data_gathering.py` script performs the following key steps:
 
 1. **Ensure Directories Exist**: Checks and creates necessary directories for storing data.
 2. **Download Data**: Downloads CSV files for the specified seasons.
@@ -94,11 +94,11 @@ The `01_data_gathering.py` script performs the following key steps:
 4. **Concatenate Data**: Combines data from multiple seasons into a single dataset.
 5. **Save Processed Data**: Saves the concatenated data to a CSV file for further processing.
 
-For more details, see the [01_data_gathering.py](scripts/01_data_gathering.py) script.
+For more details, see the [01_data_gathering.py](scripts/data_gathering.py) script.
 
-### 02_data_preparation
+### data_preparation
 
-The `02_data_preparation.py` script performs the following key steps:
+The `data_preparation.py` script performs the following key steps:
 
 1. **Fix Columns, Teams, and Referees**: Rename columns, clean team names, and clean referee names.
 2. **Handle Missing Values**: Drop rows with missing values and reset the index.
@@ -108,22 +108,22 @@ The `02_data_preparation.py` script performs the following key steps:
 6. **Normalize Betting Odds**: Convert betting odds to implied probabilities.
 7. **Save Processed Data**: Save the processed data for the current season (2024) and the final prepared dataset to CSV files.
 
-For more details, see the [02_data_preparation.py](scripts/02_data_preparation.py) script.
+For more details, see the [02_data_preparation.py](scripts/data_preparation.py) script.
 
-### 03_eda
+### eda
 
-The `03_data_eda.py` script is dedicated to Exploratory Data Analysis (EDA). It includes the following key steps:
+The `data_eda.py` script is dedicated to Exploratory Data Analysis (EDA). It includes the following key steps:
 
 1. **Data Checking**: Check data types, missing values, unique values, duplicates, and outliers.
 2. **Saving Data**: Save the cleaned and processed data for modeling and backtesting.
 
 > Note: In the **final project**, we focus on deep learning approaches, so we do not perform correlation analysis or VIF calculation as deep learning models can handle multicollinearity better. It is generally less critical to remove highly correlated features or to calculate VIF, as deep learning models can handle multicollinearity better than traditional machine learning models. We simplified our script by removing the parts related to finding highly correlated features and calculating VIF
 
-For more details, see the [03_data_eda.py](scripts/03_data_eda.py) script.
+For more details, see the [03_data_eda.py](scripts/data_eda.py) script.
 
-### 04_train_model
+### train_model
 
-The `04_train_model.py` script covers the following key steps:
+The `train_model.py` script covers the following key steps:
 
 - **Data Preprocessing**: Load and preprocess the data, including encoding categorical features and scaling numerical features.
 - **Data Splitting**: Split the data into training and test sets.
@@ -133,11 +133,11 @@ The `04_train_model.py` script covers the following key steps:
 - **Model Evaluation**: Evaluate the best model on the test set.
 - **Model Saving**: Save the best model and preprocessing objects for future use.
 
-For more details, see the [04_train_model.py](scripts/04_train_model.py) script.
+For more details, see the [04_train_model.py](scripts/train_model.py) script.
 
-### 05_predict
+### predict
 
-The `05_predict.py` script includes the following key steps:
+The `predict.py` script includes the following key steps:
 
 - **Loading the Model and Data**: Load the trained model and preprocessing objects.
 - **Setting Up Flask App**: Set up a Flask app to handle prediction requests.
@@ -149,11 +149,11 @@ The `05_predict.py` script includes the following key steps:
 - **Prediction**: Use the trained model to predict match outcomes and probabilities.
 - **Response Formatting**: Format the prediction results into a JSON response.
 
-For more details, see the [05_predict.py](scripts/05_predict.py) script.
+For more details, see the [05_predict.py](predict.py) script.
 
-### 06_back_testing_market
+### back_testing_market
 
-The `06_back_testing_market.py` script includes the following key steps:
+The `back_testing_market.py` script includes the following key steps:
 
 - **Loading Data**: Load the processed data for back-testing.
 - **Loading Model and Transformers**: Load the trained model and preprocessing objects.
@@ -162,7 +162,7 @@ The `06_back_testing_market.py` script includes the following key steps:
 - **Creating Team Names DataFrame**: Create a DataFrame to store team names, true results, predicted results, and probabilities.
 - **Calculating Brier Scores**: Calculate the Brier scores for the market and the model to evaluate prediction accuracy.
 
-For more details, see the [06_back_testing_market.py](scripts/06_back_testing_market.py) script.
+For more details, see the [back_testing_market.py](scripts/06_back_testing_market.py) script.
 
 
 ## Getting Started
