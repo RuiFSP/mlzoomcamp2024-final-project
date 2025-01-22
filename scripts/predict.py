@@ -17,11 +17,12 @@ logger = logging.getLogger(__name__)
 # Define base directory for models
 base_dir = os.path.dirname(__file__)
 
-# Load the model and preprocessing objects
-model_path = os.path.join(base_dir, 'models', 'best_model.keras')
-feature_info_path = os.path.join(base_dir, 'models', 'feature_info.npy')
-ct_path = os.path.join(base_dir, 'models', 'column_transformer.pkl')
-label_encoder_path = os.path.join(base_dir, 'models', 'label_encoder.pkl')
+# Load the model, preprocessing objects and data
+model_path = os.path.join(base_dir,'..','models','best_model.keras')
+feature_info_path = os.path.join(base_dir,'..', 'models','feature_info.npy')
+ct_path = os.path.join(base_dir,'..','models','column_transformer.pkl')
+label_encoder_path = os.path.join(base_dir,'..', 'models','label_encoder.pkl')
+data = pd.read_csv(os.path.join(base_dir,'..','data', 'processed', 'data_for_model.csv'))
 
 try:
     best_model = tf.keras.models.load_model(model_path)
@@ -156,8 +157,6 @@ def predict():
         except ValueError:
             logger.error(f"Invalid date format: {date_str}")
             return jsonify({"error": "Invalid date format. Expected 'YYYY-MM-DD'."}), 400
-
-        data = pd.read_csv(os.path.join(base_dir, 'data', 'processed', 'data_for_model.csv'))
 
         # Validate team names
         if not validate_team_name(home_team, data):

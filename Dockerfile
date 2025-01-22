@@ -14,15 +14,16 @@ COPY ["Pipfile", "Pipfile.lock", "./"]
 RUN pipenv install --system --deploy
 
 # Copy the rest of the application files
-COPY scripts /app/scripts
-COPY data/processed/data_for_model.csv /app/data/processed
-COPY models/best_model.keras /app/models/
-COPY models/column_transformer.pkl /app/models/
-COPY models/label_encoder.pkl /app/models/
-COPY models/feature_info.npy /app/models/
+COPY scripts/predict.py /app/scripts/predict.py
+COPY scripts/train_model.py /app/scripts/train_model.py
+COPY data/processed/data_for_model.csv /app/data/processed/data_for_model.csv
+COPY models /app/models/
+
+# Set the PYTHONPATH so that Gunicorn can find the modules correctly
+ENV PYTHONPATH=/app
 
 # Expose port for the application
 EXPOSE 9696
 
 # Use Gunicorn to serve the app
-ENTRYPOINT ["gunicorn", "--bind=0.0.0.0:9696", "predict:app"]
+ENTRYPOINT ["gunicorn", "--bind=0.0.0.0:9696", "scripts.predict:app"]
