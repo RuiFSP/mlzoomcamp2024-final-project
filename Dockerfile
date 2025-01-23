@@ -1,7 +1,7 @@
-# Use the official Python image from the Docker Hub
-FROM python:3.10-slim
+# Public Docker image for the Lambda function
+FROM public.ecr.aws/lambda/python:3.10
 
-# Install pipenv
+# Install keras-tuner not pipenv
 RUN pip install pipenv
 
 # Set a working directory to copy files
@@ -15,7 +15,6 @@ RUN pipenv install --system --deploy
 
 # Copy the rest of the application files
 COPY scripts/predict.py /app/scripts/predict.py
-COPY scripts/train_model.py /app/scripts/train_model.py
 COPY data/processed/data_for_model.csv /app/data/processed/data_for_model.csv
 COPY models /app/models/
 

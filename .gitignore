@@ -177,3 +177,4 @@ notebooks/tuner_dir/
 # ignore logs in notebooks folder
 scripts/logs/
 scripts/tuner/
+backup_files/

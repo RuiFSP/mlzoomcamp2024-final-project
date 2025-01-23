@@ -5,18 +5,19 @@ name = "pypi"
 
 [packages]
 numpy = "*"
-scikit-learn = "*"
-tensorflow = "*"
-keras = "*"
 joblib = "*"
 flask = "*"
 gunicorn = "*"
 pandas = "*"
+tflite-runtime = "*"
+scikit-learn = "*"
 
 [dev-packages]
 matplotlib = "*"
 seaborn = "*"
 jupyter = "*"
+ipykernel = "*"
+keras = "*"
 
 [requires]
 python_version = "3.10"
