@@ -9,8 +9,9 @@ joblib = "*"
 flask = "*"
 gunicorn = "*"
 pandas = "*"
-tflite-runtime = "*"
 scikit-learn = "*"
+awscli = "*"
+tensorflow = "*"
 
 [dev-packages]
 matplotlib = "*"
@@ -18,6 +19,8 @@ seaborn = "*"
 jupyter = "*"
 ipykernel = "*"
 keras = "*"
+awsebcli = "*"
+keras-tuner = "*"
 
 [requires]
 python_version = "3.10"

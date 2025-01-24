@@ -1,28 +1,31 @@
-# Public Docker image for the Lambda function
-FROM public.ecr.aws/lambda/python:3.10
+# Use a slim python base image
+FROM python:3.10-slim
 
-# Install keras-tuner not pipenv
+# Install pipenv (optional, based on your workflow)
 RUN pip install pipenv
 
-# Set a working directory to copy files
+# Set the working directory for the application
 WORKDIR /app
 
-# Copy only the Pipfile and Pipfile.lock to take advantage of Docker caching
+# Copy Pipfile and Pipfile.lock
 COPY ["Pipfile", "Pipfile.lock", "./"]
 
-# Install only production dependencies (with --deploy to ensure strict dependency resolution)
+# Install production dependencies from Pipfile
 RUN pipenv install --system --deploy
 
-# Copy the rest of the application files
+# Copy application files into the container
+COPY . /app/
+
+# Ensure model files are also copied
 COPY scripts/predict.py /app/scripts/predict.py
 COPY data/processed/data_for_model.csv /app/data/processed/data_for_model.csv
 COPY models /app/models/
 
-# Set the PYTHONPATH so that Gunicorn can find the modules correctly
-ENV PYTHONPATH=/app
+# Set the environment variable for the Flask app
+ENV FLASK_APP=app.py
 
-# Expose port for the application
+# Expose the port the app will run on
 EXPOSE 9696
 
-# Use Gunicorn to serve the app
+# Use Gunicorn to run the Flask app
 ENTRYPOINT ["gunicorn", "--bind=0.0.0.0:9696", "scripts.predict:app"]

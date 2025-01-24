@@ -178,3 +178,7 @@ notebooks/tuner_dir/
 scripts/logs/
 scripts/tuner/
 backup_files/
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml

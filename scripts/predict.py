@@ -1,13 +1,10 @@
 import os
-import subprocess
-
-# NumPy version to avoid compatibility issues
-subprocess.check_call(["pip", "install", "numpy<2.0"])
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'  # Suppress TensorFlow GPU warnings
 
 import joblib
 import pandas as pd
 import numpy as np
-import tflite_runtime.interpreter as tflite
+import tensorflow as tf
 from flask import Flask, request, jsonify
 import logging
 from typing import Dict, Any
@@ -20,30 +17,20 @@ logger = logging.getLogger(__name__)
 base_dir = os.path.dirname(__file__)
 
 # Load the model, preprocessing objects and data
+model_path = os.path.join(base_dir,'..','models','best_model.keras')
 feature_info_path = os.path.join(base_dir,'..', 'models','feature_info.npy')
 ct_path = os.path.join(base_dir,'..','models','column_transformer.pkl')
 label_encoder_path = os.path.join(base_dir,'..', 'models','label_encoder.pkl')
 data = pd.read_csv(os.path.join(base_dir,'..','data', 'processed', 'data_for_model.csv'))
 
-# Load the TFLite model and allocate tensors
-tflite_model_path = os.path.join(base_dir, '..', 'models', 'best_model.tflite')
 try:
-    interpreter = tflite.Interpreter(model_path=tflite_model_path)
-    interpreter.allocate_tensors()
-    input_details = interpreter.get_input_details()
-    output_details = interpreter.get_output_details()
-    logger.info("TFLite model loaded successfully.")
-except Exception as e:
-    logger.error(f"Error loading TFLite model: {str(e)}")
-    raise
-
-try:
+    best_model = tf.keras.models.load_model(model_path)
     feature_info = np.load(feature_info_path, allow_pickle=True).item()
     ct = joblib.load(ct_path)
     label_encoder = joblib.load(label_encoder_path)
-    logger.info("Preprocessing objects loaded successfully.")
+    logger.info("Model and preprocessing objects loaded successfully.")
 except Exception as e:
-    logger.error(f"Error loading preprocessing objects: {str(e)}")
+    logger.error(f"Error loading model or preprocessing objects: {str(e)}")
     raise
 
 app = Flask("predict")
@@ -53,7 +40,7 @@ def validate_team_name(team_name: str, data: pd.DataFrame) -> bool:
     return team_name in data['home_team'].unique() or team_name in data['away_team'].unique()
 
 def predict_match_outcome(data: pd.DataFrame, home_team: str, away_team: str, date_str: str, 
-                          ct: Any, interpreter: tflite.Interpreter, label_encoder: Any, 
+                          ct: Any, best_model: tf.keras.Model, label_encoder: Any, 
                           feature_info: Dict[str, Any]) -> Dict[str, Any]:
     """
     Predict the outcome of a football match based on historical data and features.
@@ -64,7 +51,7 @@ def predict_match_outcome(data: pd.DataFrame, home_team: str, away_team: str, da
         away_team (str): Away team's name.
         date_str (str): Date of the match in 'YYYY-MM-DD' format.
         ct (ColumnTransformer): Preprocessing pipeline from training.
-        interpreter (tflite.Interpreter): TFLite model interpreter.
+        best_model_dense (keras.Model): Trained neural network model.
         label_encoder (LabelEncoder): Encoder for target classes.
         feature_info (dict): Dictionary containing `categorical_features` and `numerical_features`.
 
@@ -125,10 +112,8 @@ def predict_match_outcome(data: pd.DataFrame, home_team: str, away_team: str, da
     # Step 5: Preprocess the features
     X_new_processed = ct.transform(final_features)
 
-    # Step 6: Predict probabilities using TFLite model
-    interpreter.set_tensor(input_details[0]['index'], X_new_processed.astype(np.float32))
-    interpreter.invoke()
-    y_pred = interpreter.get_tensor(output_details[0]['index'])
+    # Step 6: Predict probabilities
+    y_pred = best_model.predict(X_new_processed)
 
     # Map probabilities to outcomes
     prob_home_win = y_pred[0][label_encoder.transform(['H'])[0]]
@@ -180,7 +165,7 @@ def predict():
             logger.error(f"Invalid away team name: {away_team}")
             return jsonify({"error": f"Invalid away team name: {away_team}"}), 400
 
-        prediction = predict_match_outcome(data, home_team, away_team, date_str, ct, interpreter, label_encoder, feature_info)
+        prediction = predict_match_outcome(data, home_team, away_team, date_str, ct, best_model, label_encoder, feature_info)
 
         # Convert float32 values to float
         prediction = {k: float(v) if isinstance(v, np.float32) else v for k, v in prediction.items()}
