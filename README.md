@@ -6,35 +6,32 @@ This project aims to predict the outcomes of Premier League football matches usi
 
 ## Table of Contents
 
-- [Midterm Project: Premier League Football Prediction](#midterm-project-premier-league-football-prediction)
-  - [Overview](#overview)
-  - [Table of Contents](#table-of-contents)
-  - [Problem Description](#problem-description)
-  - [Data](#data)
-    - [Home Wins (H)](#home-wins-h)
-    - [Away Wins (A)](#away-wins-a)
-    - [Draws (D)](#draws-d)
-  - [Key Observations](#key-observations)
-  - [Scripts](#scripts)
-    - [data\_gathering](#data_gathering)
-    - [data\_preparation](#data_preparation)
-    - [eda](#eda)
-    - [train\_model](#train_model)
-    - [predict](#predict)
-    - [back\_testing\_market](#back_testing_market)
-  - [Getting Started](#getting-started)
-    - [Prerequisites](#prerequisites)
-    - [Clone the Repository](#clone-the-repository)
-    - [Installing Dependencies](#installing-dependencies)
-      - [Navigate to Your Project Directory](#navigate-to-your-project-directory)
-      - [Install the Project Dependencies](#install-the-project-dependencies)
-      - [Activate the Virtual Environment](#activate-the-virtual-environment)
-    - [Running Docker](#running-docker)
-    - [Running on AWS Elastic Beanstalk](#running-on-aws-elastic-beanstalk)
-      - [Troubleshooting](#troubleshooting)
-    - [Testing the Model](#testing-the-model)
-    - [Running the Streamlit App (Bonus)](#running-the-streamlit-app-bonus)
-  - [Contributing](#contributing)
+- [Overview](#overview)
+- [Problem Description](#problem-description)
+- [Data](#data)
+  - [Home Wins (H)](#home-wins-h)
+  - [Away Wins (A)](#away-wins-a)
+  - [Draws (D)](#draws-d)
+- [Key Observations](#key-observations)
+- [Scripts](#scripts)
+  - [data\_gathering](#data_gathering)
+  - [data\_preparation](#data_preparation)
+  - [eda](#eda)
+  - [train\_model](#train_model)
+  - [predict](#predict)
+  - [back\_testing\_market](#back_testing_market)
+- [Getting Started](#getting-started)
+  - [Prerequisites](#prerequisites)
+  - [Clone the Repository](#clone-the-repository)
+  - [Installing Dependencies](#installing-dependencies)
+    - [Navigate to Your Project Directory](#navigate-to-your-project-directory)
+    - [Install the Project Dependencies](#install-the-project-dependencies)
+    - [Activate the Virtual Environment](#activate-the-virtual-environment)
+  - [Running Docker](#running-docker)
+  - [Running on AWS Elastic Beanstalk](#running-on-aws-elastic-beanstalk)
+  - [Testing the Model](#testing-the-model)
+  - [Running the Streamlit App (Bonus)](#running-the-streamlit-app-bonus)
+- [Contributing](#contributing)
 
 ## Problem Description
 
@@ -53,8 +50,7 @@ Despite the ever-changing dynamics of sports and the competitive nature of predi
 
 The raw data for this project is sourced from [Football Data](https://www.football-data.co.uk/data.php). The focus is exclusively on the Premier League, covering seasons from 2005/2006 to 2024/2025. The raw data files can be found [here](https://github.com/RuiFSP/mlzoomcamp2024-midterm-project/tree/main/data/raw_data).
 
-
-![FRT](images/full_time_results.png)
+![FRT](images/results.png)
 
 ### Home Wins (H)
 - **Dominant Trend**: Home wins consistently have the highest percentage among the three outcomes.
@@ -81,8 +77,9 @@ The raw data for this project is sourced from [Football Data](https://www.footba
 
 ---
 
-
 ## Scripts
+
+![tree-simplified](images/tree.PNG)
 
 ### data_gathering
 
@@ -94,7 +91,7 @@ The `data_gathering.py` script performs the following key steps:
 4. **Concatenate Data**: Combines data from multiple seasons into a single dataset.
 5. **Save Processed Data**: Saves the concatenated data to a CSV file for further processing.
 
-For more details, see the [01_data_gathering.py](scripts/data_gathering.py) script.
+For more details, see the [data_gathering.py](scripts/data_gathering.py) script.
 
 ### data_preparation
 
@@ -112,14 +109,14 @@ For more details, see the [02_data_preparation.py](scripts/data_preparation.py) 
 
 ### eda
 
-The `data_eda.py` script is dedicated to Exploratory Data Analysis (EDA). It includes the following key steps:
+The `eda.py` script is dedicated to Exploratory Data Analysis (EDA). It includes the following key steps:
 
 1. **Data Checking**: Check data types, missing values, unique values, duplicates, and outliers.
 2. **Saving Data**: Save the cleaned and processed data for modeling and backtesting.
 
 > Note: In the **final project**, we focus on deep learning approaches, so we do not perform correlation analysis or VIF calculation as deep learning models can handle multicollinearity better. It is generally less critical to remove highly correlated features or to calculate VIF, as deep learning models can handle multicollinearity better than traditional machine learning models. We simplified our script by removing the parts related to finding highly correlated features and calculating VIF
 
-For more details, see the [03_data_eda.py](scripts/data_eda.py) script.
+For more details, see the [eda.py](scripts/eda.py) script.
 
 ### train_model
 
@@ -133,7 +130,7 @@ The `train_model.py` script covers the following key steps:
 - **Model Evaluation**: Evaluate the best model on the test set.
 - **Model Saving**: Save the best model and preprocessing objects for future use.
 
-For more details, see the [04_train_model.py](scripts/train_model.py) script.
+For more details, see the [train_model.py](scripts/train_model.py) script.
 
 ### predict
 
@@ -149,7 +146,7 @@ The `predict.py` script includes the following key steps:
 - **Prediction**: Use the trained model to predict match outcomes and probabilities.
 - **Response Formatting**: Format the prediction results into a JSON response.
 
-For more details, see the [05_predict.py](predict.py) script.
+For more details, see the [predict.py](scripts/predict.py) script.
 
 ### back_testing_market
 
@@ -162,8 +159,7 @@ The `back_testing_market.py` script includes the following key steps:
 - **Creating Team Names DataFrame**: Create a DataFrame to store team names, true results, predicted results, and probabilities.
 - **Calculating Brier Scores**: Calculate the Brier scores for the market and the model to evaluate prediction accuracy.
 
-For more details, see the [back_testing_market.py](scripts/06_back_testing_market.py) script.
-
+For more details, see the [back_testing_market.py](scripts/back_testing_market.py) script.
 
 ## Getting Started
 
@@ -178,7 +174,7 @@ For more details, see the [back_testing_market.py](scripts/06_back_testing_marke
 Use `git clone` to copy the repository to your local machine and navigate into the project directory.
 
 ```bash
-  git clone git@github.com:RuiFSP/mlzoomcamp2024-final-project.git>
+  git clone git@github.com:RuiFSP/mlzoomcamp2024-final-project.git
   cd mlzoomcamp2024-final-project
 ```
 
@@ -187,10 +183,6 @@ Use `git clone` to copy the repository to your local machine and navigate into t
 #### Navigate to Your Project Directory
 
 First, open a terminal and change to the directory where your `Pipfile` and `Pipfile.lock` are located.
-
-```bash
-  cd /path/to/your/project
-```
 
 #### Install the Project Dependencies
 
@@ -219,15 +211,20 @@ Now you're in an isolated environment where the dependencies specified in the `P
 
 Build the Docker image:
 
+  > my setup: 
+  > `<docker_image_name>` is project-ml
+
 ```bash
-    docker build -t <docker_image_name> .
+    docker build -t project-ml .
 ```
 
 Run the Docker container:
 
 ```bash
-    docker run -it --rm -p 9696:9696 <docker_image_name>
+    docker run -it --rm -p 9696:9696 project-ml
 ```
+
+![aws_deploy](images/docker_locally.PNG)
 
 > **Note:**  
 > If you get an error with `[ 5/11] RUN 'pipenv install --system --deploy'`, try turning off your VPN.
@@ -237,6 +234,9 @@ Run the Docker container:
 To run Elastic Beanstalk, follow these steps:
 
 1. **Install the AWS Elastic Beanstalk CLI**:
+
+  > **Note:** don't forget you need to setup your access to AWS beforehand
+
    Ensure you have the AWS CLI and Elastic Beanstalk CLI installed. You can install the Elastic Beanstalk CLI using pip:
 
    ```bash
@@ -246,75 +246,33 @@ To run Elastic Beanstalk, follow these steps:
 2. **Initialize Elastic Beanstalk**:
    Navigate to your project directory and initialize Elastic Beanstalk:
 
+    > my setup:
+      - `<project_name>` is project-ml
+
    ```bash
-   eb init -p docker -r <region> <project_name>
+   eb init -p "Docker running on 64bit Amazon Linux 2" project-ml
    ```
 
-   Follow the prompts to set up your application. Choose the appropriate region and project name
+    > Note: To run it locally i had to use Amazon Linux
+
+   ```bash
+   eb local run --port 9696
+   ```
 
 3. **Create an Environment and Deploy**:
    Create a new environment and deploy your application:
 
    ```bash
-   eb create <project_name> --enable-spot
+   eb create project-ml --platform "Docker running on 64bit Amazon Linux 2"
    ```
 
-   Replace `<project_name>` with your desired environment name.
-
-   ![aws_deploy](images/aws_deploy.PNG)
-
-   #### Troubleshooting
-
-   - **Load Balancer Configuration**
-
-     - Error Message: **"At least two subnets in two different Availability Zones must be specified..."**
-     - Elastic Beanstalk is configured to use a load balancer, but it requires at least two subnets in two different AZs to distribute traffic properly.
-
-   - **Subnet Issue**
-     - Error Message: **"No default subnet for availability zone: 'eu-west-2a'"**
-     - The environment is attempting to create an auto-scaling group, but it cannot find a valid subnet in the specified AZ (eu-west-2a).
-     - This typically happens when:
-       - Your VPC does not have subnets in the specified AZ.
-       - There’s no default subnet configured for the region.
-
-     **Solution Steps**
-
-     1. Verify Default Subnets
-        To confirm the existing default subnets in your VPC:
-
-        **AWS CLI**: Run the following command to list subnets:
-
-        ```bash
-        aws ec2 describe-subnets --filters Name=default-for-az,Values=true
-        ```
-
-        This will display all the default subnets in your VPC.
-
-     2. Configure Elastic Beanstalk with the Correct Subnets
-
-        ```bash
-        aws elasticbeanstalk update-environment \
-        --environment-name `<project_name>` \
-        --option-settings file://options.json
-        ```
-
-        Create an options.json file with subnet settings (add your subnets ids):
-
-        ```json
-        [
-            {
-                "Namespace": "aws:ec2:vpc",
-                "OptionName": "Subnets",
-                "Value": "subnet-XXXXXXX,subnet-XXXXXXX"
-            }
-        ]
-        ```
+   ![aws_deploy](images/aws_deploy_web.PNG)
 
 4. **Terminate the Environment**:
    When you are done, you can terminate the environment to stop incurring charges:
 
    ```bash
-   eb terminate <environment-name>
+   eb terminate project-ml
    ```
 
 ![aws_deploy](images/success_aws.PNG)
@@ -328,7 +286,9 @@ Open a new terminal and run the test script:
     python tests/test_predict_aws.py # to test aws 
 ```
 
-To use the prediction service, send a POST request to the /predict endpoint with the following JSON payload locally or configure the test script accordantly:
+![aws_deploy](images/docker_locally_tested.PNG)
+
+To use the prediction service, send a POST request to the /predict endpoint with the following JSON payload locally or configure the test script accordingly:
 
 ```bash
 curl -X POST http://127.0.0.1:9696/predict \
@@ -340,6 +300,7 @@ curl -X POST http://127.0.0.1:9696/predict \
          }'
 ```
 
+![aws_deploy](images/curl_testing.PNG)
 
 ### Running the Streamlit App (Bonus)
 
@@ -359,4 +320,4 @@ To run the Streamlit app locally, follow these steps:
 
 ## Contributing
 
-Contributions are welcome! Please open an issue or submit a pull request for any improvements or bug fixes
+Contributions are welcome! Please open an issue or submit a pull request for any improvements or bug fixes.
