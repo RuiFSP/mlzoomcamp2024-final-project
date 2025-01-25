@@ -13,7 +13,7 @@
   - [data\_preparation](#data_preparation)
   - [eda](#eda)
   - [train\_model](#train_model)
-    - [Notebook: 04\_train\_model.ipynb](#notebook-04_train_modelipynb)
+  -   [Extra\_Notes\_Models](#extra_notes_models)
   - [predict](#predict)
   - [back\_testing\_market](#back_testing_market)
 - [Getting Started](#getting-started)
@@ -145,7 +145,7 @@ For more details, see the [train_model.py](scripts/train_model.py) script.
 
 ---
 
-### Extra Notes for Picking models
+#### Extra_Notes_Models
 
 In the `04_train_model.ipynb` notebook, we trained various machine learning models on the dataset. Here are the key steps:
 
