@@ -2,7 +2,6 @@
 
 ## Table of Contents
 
-- [Overview](#overview)
 - [Problem Description](#problem-description)
 - [Data](#data)
   - [Home Wins (H)](#home-wins-h)
