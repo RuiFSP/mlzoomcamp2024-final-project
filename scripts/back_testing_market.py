@@ -49,7 +49,7 @@ def load_data(base_dir: str) -> pd.DataFrame:
 def load_model_and_transformers(base_dir: str) -> Tuple[tf.keras.Model, dict, ColumnTransformer, LabelEncoder]:
     """Load the model and transformers from the specified directory."""
     logging.info("Loading model and transformers")
-    model = tf.keras.models.load_model(os.path.join(base_dir, '..', 'models', 'model_best.keras'))
+    model = tf.keras.models.load_model(os.path.join(base_dir, '..', 'models', 'best_model.keras'))
     feature_info = np.load(os.path.join(base_dir, '..', 'models', 'feature_info.npy'), allow_pickle=True).item()
     ct = joblib.load(os.path.join(base_dir, '..', 'models', 'column_transformer.pkl'))
     label_encoder = joblib.load(os.path.join(base_dir, '..', 'models', 'label_encoder.pkl'))
