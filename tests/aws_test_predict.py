@@ -1,6 +1,6 @@
 import requests
 
-host = "https://project-ml.eba-fdq2mxii.eu-west-2.elasticbeanstalk.com" # change to your app's URL in AWS
+host = "https://XXXXXX.XXXXXXXX.eu-west-2.elasticbeanstalk.com" # change to your app's URL in AWS
 url = f"{host}/predict"
 
 

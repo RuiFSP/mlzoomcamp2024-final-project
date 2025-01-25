@@ -18,6 +18,7 @@ This project aims to predict the outcomes of Premier League football matches usi
   - [data\_preparation](#data_preparation)
   - [eda](#eda)
   - [train\_model](#train_model)
+    - [Notebook: 04\_train\_model.ipynb](#notebook-04_train_modelipynb)
   - [predict](#predict)
   - [back\_testing\_market](#back_testing_market)
 - [Getting Started](#getting-started)
@@ -29,6 +30,8 @@ This project aims to predict the outcomes of Premier League football matches usi
     - [Activate the Virtual Environment](#activate-the-virtual-environment)
   - [Running Docker](#running-docker)
   - [Running on AWS Elastic Beanstalk](#running-on-aws-elastic-beanstalk)
+    - [Run Locally Elastic Beanstalk](#run-locally-elastic-beanstalk)
+    - [Run Elastic Beanstalk on AWS](#run-elastic-beanstalk-on-aws)
   - [Testing the Model](#testing-the-model)
   - [Running the Streamlit App (Bonus)](#running-the-streamlit-app-bonus)
 - [Contributing](#contributing)
@@ -122,29 +125,86 @@ For more details, see the [eda.py](scripts/eda.py) script.
 
 The `train_model.py` script covers the following key steps:
 
-- **Data Preprocessing**: Load and preprocess the data, including encoding categorical features and scaling numerical features.
-- **Data Splitting**: Split the data into training and test sets.
-- **Class Weights Calculation**: Compute class weights to handle imbalanced datasets.
-- **Model Building**: Build a Keras model with hyperparameter tuning using Keras Tuner.
-- **Hyperparameter Tuning**: Perform hyperparameter tuning to find the best model configuration.
-- **Model Evaluation**: Evaluate the best model on the test set.
-- **Model Saving**: Save the best model and preprocessing objects for future use.
+1. **Data Preprocessing**: Load and preprocess the data, including encoding categorical features and scaling numerical features.
+2. **Data Splitting**: Split the data into training and test sets.
+3. **Class Weights Calculation**: Compute class weights to handle imbalanced datasets.
+4. **Model Building**: Build a Keras model with hyperparameter tuning using Keras Tuner.
+5. **Hyperparameter Tuning**: Perform hyperparameter tuning to find the best model configuration.
+6. **Model Evaluation**: Evaluate the best model on the test set.
+7. **Model Saving**: Save the best model and preprocessing objects for future use.
 
 For more details, see the [train_model.py](scripts/train_model.py) script.
+
+#### Extra Notes for Picking models
+
+In the `04_train_model.ipynb` notebook, we trained various machine learning models on the dataset. Here are the key steps:
+
+1. **Model Training Tryouts (Dense NN, CNN, LSTM, TCNs, LSTM with Attention)**:
+   - Models:
+
+     - **Dense Neural Network**: A simple feedforward neural network used as a baseline model.
+
+     <div style="display: flex; justify-content: space-between;">
+       <img src="images/dense_model_training_history.png" alt="Dense Model Training History" width="45%">
+       <img src="images/dense_model_confusion_matrix.png" alt="Dense Model Confusion Matrix" width="45%">
+     </div>
+
+     - **Convolutional Neural Network (CNN)**: Used to capture spatial patterns in the data.
+
+     <div style="display: flex; justify-content: space-between;">
+       <img src="images/cnn_model_training_history.png" alt="CNN Model Training History" width="45%">
+       <img src="images/cnn_model_confusion_matrix.png" alt="CNN Model Confusion Matrix" width="45%">
+     </div>
+
+     - **Long Short-Term Memory (LSTM)**: Used for capturing temporal dependencies in the data.
+
+     <div style="display: flex; justify-content: space-between;">
+       <img src="images/lstm_model_training_history.png" alt="LSTM Model Training History" width="45%">
+       <img src="images/lstm_model_confusion_matrix.png" alt="LSTM Model Confusion Matrix" width="45%">
+     </div>
+
+     - **Temporal Convolutional Networks (TCNs)**: Combines the benefits of CNNs and RNNs for sequence modeling.
+
+     <div style="display: flex; justify-content: space-between;">
+       <img src="images/tcn_model_training_history.png" alt="TCN Model Training History" width="45%">
+       <img src="images/tcn_model_confusion_matrix.png" alt="TCN Model Confusion Matrix" width="45%">
+     </div>
+
+     - **LSTM with Attention Mechanism**: Enhances the LSTM model by focusing on important parts of the sequence.
+
+     <div style="display: flex; justify-content: space-between;">
+       <img src="images/lstm_attention_model_training_history.png" alt="LSTM Attention Model Training History" width="45%">
+       <img src="images/lstm_attention_model_confusion_matrix.png" alt="LSTM Attention Model Confusion Matrix" width="45%">
+     </div>
+
+   - Each model was trained with early stopping and learning rate scheduling.
+   - Evaluated each model on the test set and printed the test accuracy.
+
+2. **Hyperparameter Tuning**:
+   - Used Keras Tuner to perform hyperparameter tuning on the Dense model.
+   - Defined a function to build the model with hyperparameters.
+   - Set up and ran the tuner.
+   - Retrieved and evaluated the best model from the tuning process.
+   - Saved the best model and printed its test accuracy.
+
+3. **Comparison**:
+   - Compared the test accuracy of the best model with the original Dense model.
+  
+For more details, see the [04_train_model.ipynb](notebooks/04_train_model.ipynb) notebook.
 
 ### predict
 
 The `predict.py` script includes the following key steps:
 
-- **Loading the Model and Data**: Load the trained model and preprocessing objects.
-- **Setting Up Flask App**: Set up a Flask app to handle prediction requests.
-- **Prediction Endpoint**: Define an endpoint to receive match data and return predictions.
-- **Health Check Endpoint**: Define an endpoint to check the health status of the service.
-- **Input Validation**: Validate the input data for required fields and correct formats.
-- **Feature Engineering**: Generate features from the input data, including date-related features.
-- **Preprocessing**: Apply the same preprocessing steps used during model training.
-- **Prediction**: Use the trained model to predict match outcomes and probabilities.
-- **Response Formatting**: Format the prediction results into a JSON response.
+1. **Loading the Model and Data**: Load the trained model and preprocessing objects.
+2. **Setting Up Flask App**: Set up a Flask app to handle prediction requests.
+3. **Prediction Endpoint**: Define an endpoint to receive match data and return predictions.
+4. **Health Check Endpoint**: Define an endpoint to check the health status of the service.
+5. **Input Validation**: Validate the input data for required fields and correct formats.
+6. **Feature Engineering**: Generate features from the input data, including date-related features.
+7. **Preprocessing**: Apply the same preprocessing steps used during model training.
+8. **Prediction**: Use the trained model to predict match outcomes and probabilities.
+9. **Response Formatting**: Format the prediction results into a JSON response.
 
 For more details, see the [predict.py](scripts/predict.py) script.
 
@@ -152,12 +212,12 @@ For more details, see the [predict.py](scripts/predict.py) script.
 
 The `back_testing_market.py` script includes the following key steps:
 
-- **Loading Data**: Load the processed data for back-testing.
-- **Loading Model and Transformers**: Load the trained model and preprocessing objects.
-- **Data Preprocessing**: Preprocess the data and split it into training and testing sets.
-- **Predicting Results**: Use the trained model to predict match outcomes and probabilities.
-- **Creating Team Names DataFrame**: Create a DataFrame to store team names, true results, predicted results, and probabilities.
-- **Calculating Brier Scores**: Calculate the Brier scores for the market and the model to evaluate prediction accuracy.
+1. **Loading Data**: Load the processed data for back-testing.
+2. **Loading Model and Transformers**: Load the trained model and preprocessing objects.
+3. **Data Preprocessing**: Preprocess the data and split it into training and testing sets.
+4. **Predicting Results**: Use the trained model to predict match outcomes and probabilities.
+5. **Creating Team Names DataFrame**: Create a DataFrame to store team names, true results, predicted results, and probabilities.
+6. **Calculating Brier Scores**: Calculate the Brier scores for the market and the model to evaluate prediction accuracy.
 
 For more details, see the [back_testing_market.py](scripts/back_testing_market.py) script.
 
@@ -233,49 +293,51 @@ Run the Docker container:
 
 To run Elastic Beanstalk, follow these steps:
 
-1. **Install the AWS Elastic Beanstalk CLI**:
+-  **Install the AWS Elastic Beanstalk CLI**:
 
-  > **Note:** don't forget you need to setup your access to AWS beforehand
+    > **Note:** don't forget you need to setup your access to AWS beforehand
 
-   Ensure you have the AWS CLI and Elastic Beanstalk CLI installed. You can install the Elastic Beanstalk CLI using pip:
+    Ensure you have the AWS CLI and Elastic Beanstalk CLI installed. You can install the Elastic Beanstalk CLI using pip:
 
-   ```bash
-   pip install awsebcli
-   ```
+    ```bash
+    pip install awsebcli
+    ```
 
-2. **Initialize Elastic Beanstalk**:
-   Navigate to your project directory and initialize Elastic Beanstalk:
+#### Run Locally Elastic Beanstalk
+
+-  **Initialize Elastic Beanstalk**:
+    Navigate to your project directory and initialize Elastic Beanstalk:
 
     > my setup:
-      - `<project_name>` is project-ml
+    - `<project_name>` is project-ml
 
-   ```bash
-   eb init -p "Docker running on 64bit Amazon Linux 2" project-ml
-   ```
+    ```bash
+    eb init -p "Docker running on 64bit Amazon Linux 2" project-ml
+    ```
 
     > Note: To run it locally i had to use Amazon Linux
 
-   ```bash
-   eb local run --port 9696
-   ```
+    ```bash
+    eb local run --port 9696
+    ```
 
-3. **Create an Environment and Deploy**:
-   Create a new environment and deploy your application:
+#### Run Elastic Beanstalk on AWS
 
-   ```bash
-   eb create project-ml --platform "Docker running on 64bit Amazon Linux 2"
-   ```
+-  **Create an Environment and Deploy**:
+    Create a new environment and deploy your application:
 
-   ![aws_deploy](images/aws_deploy_web.PNG)
+    ```bash
+    eb create project-ml --platform "Docker running on 64bit Amazon Linux 2"
+    ```
 
-4. **Terminate the Environment**:
-   When you are done, you can terminate the environment to stop incurring charges:
+    ![aws_deploy](images/aws_deploy_web.PNG)
 
-   ```bash
-   eb terminate project-ml
-   ```
+- **Terminate the Environment**:
+    When you are done, you can terminate the environment to stop incurring charges:
 
-![aws_deploy](images/success_aws.PNG)
+    ```bash
+    eb terminate project-ml
+    ```
 
 ### Testing the Model
 
