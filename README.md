@@ -393,7 +393,7 @@ To run Elastic Beanstalk, follow these steps:
     Navigate to your project directory and initialize Elastic Beanstalk:
 
     > my setup:
-    - `<project_name>` is project-ml
+    > `<project_name>` is project-ml
 
     ```bash
     eb init -p "Docker running on 64bit Amazon Linux 2" project-ml
@@ -466,4 +466,4 @@ For fun you want to run a Streamlit app locally, follow these steps:
     streamlit run app.py
 ```
 
-![streamlit_app](images/images/streamlit.PNG)
+![streamlit_app](images/streamlit.PNG)
