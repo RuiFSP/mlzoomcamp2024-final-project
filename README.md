@@ -85,6 +85,8 @@ The raw data for this project is sourced from [Football Data](https://www.footba
 
 ![tree-simplified](images/tree.PNG)
 
+---
+
 ### data_gathering
 
 The `data_gathering.py` script performs the following key steps:
@@ -96,6 +98,8 @@ The `data_gathering.py` script performs the following key steps:
 5. **Save Processed Data**: Saves the concatenated data to a CSV file for further processing.
 
 For more details, see the [data_gathering.py](scripts/data_gathering.py) script.
+
+---
 
 ### data_preparation
 
@@ -111,6 +115,8 @@ The `data_preparation.py` script performs the following key steps:
 
 For more details, see the [02_data_preparation.py](scripts/data_preparation.py) script.
 
+---
+
 ### eda
 
 The `eda.py` script is dedicated to Exploratory Data Analysis (EDA). It includes the following key steps:
@@ -121,6 +127,8 @@ The `eda.py` script is dedicated to Exploratory Data Analysis (EDA). It includes
 > Note: In the **final project**, we focus on deep learning approaches, so we do not perform correlation analysis or VIF calculation as deep learning models can handle multicollinearity better. It is generally less critical to remove highly correlated features or to calculate VIF, as deep learning models can handle multicollinearity better than traditional machine learning models. We simplified our script by removing the parts related to finding highly correlated features and calculating VIF
 
 For more details, see the [eda.py](scripts/eda.py) script.
+
+---
 
 ### train_model
 
@@ -135,6 +143,8 @@ The `train_model.py` script covers the following key steps:
 7. **Model Saving**: Save the best model and preprocessing objects for future use.
 
 For more details, see the [train_model.py](scripts/train_model.py) script.
+
+---
 
 ### Extra Notes for Picking models
 
@@ -193,6 +203,8 @@ In the `04_train_model.ipynb` notebook, we trained various machine learning mode
   
 For more details, see the [04_train_model.ipynb](notebooks/04_train_model.ipynb) notebook.
 
+---
+
 ### predict
 
 The `predict.py` script includes the following key steps:
@@ -209,6 +221,8 @@ The `predict.py` script includes the following key steps:
 
 For more details, see the [predict.py](scripts/predict.py) script.
 
+---
+
 ### back_testing_market
 
 The `back_testing_market.py` script includes the following key steps:
@@ -221,6 +235,8 @@ The `back_testing_market.py` script includes the following key steps:
 6. **Calculating Brier Scores**: Calculate the Brier scores for the market and the model to evaluate prediction accuracy.
 
 For more details, see the [back_testing_market.py](scripts/back_testing_market.py) script.
+
+---
 
 #### Insights for back_testing_market
 
@@ -283,6 +299,8 @@ In sports or betting, the Brier score evaluates how well a model predicts outcom
   - The distribution graph suggests general parity between model and market accuracy, with differences clustering around zero and a smaller proportion of extreme cases.
   - The heatmap offers granular insights, showing specific team matchups where one side (model or market) consistently performs better.
 
+---
+
 ## Getting Started
 
 ### Prerequisites
@@ -329,6 +347,8 @@ To activate the virtual environment, use:
 
 Now you're in an isolated environment where the dependencies specified in the `Pipfile.lock` are installed.
 
+---
+
 ### Running Docker
 
 Build the Docker image:
@@ -350,6 +370,8 @@ Run the Docker container:
 
 > **Note:**  
 > If you get an error with `[ 5/11] RUN 'pipenv install --system --deploy'`, try turning off your VPN.
+
+---
 
 ### Running on AWS Elastic Beanstalk
 
@@ -401,6 +423,8 @@ To run Elastic Beanstalk, follow these steps:
     eb terminate project-ml
     ```
 
+---
+
 ### Testing the Model
 
 Open a new terminal and run the test script:
@@ -425,6 +449,8 @@ curl -X POST http://127.0.0.1:9696/predict \
 ```
 
 ![aws_deploy](images/curl_testing.PNG)
+
+---
 
 ### Running the Streamlit App (Bonus)
 
