@@ -1,8 +1,4 @@
-# Midterm Project: Premier League Football Prediction
-
-## Overview
-
-This project aims to predict the outcomes of Premier League football matches using machine learning models. It explores various features to determine their importance in predicting match results—whether it’s a home win, draw, or away win.
+# Final Project: Premier League Football Prediction using Deep Learning
 
 ## Table of Contents
 
