@@ -33,8 +33,11 @@ This project aims to predict the outcomes of Premier League football matches usi
     - [Run Locally Elastic Beanstalk](#run-locally-elastic-beanstalk)
     - [Run Elastic Beanstalk on AWS](#run-elastic-beanstalk-on-aws)
   - [Testing the Model](#testing-the-model)
+    - [Insights from models versus the market](#insights-for-back_testing_market)
   - [Running the Streamlit App (Bonus)](#running-the-streamlit-app-bonus)
 - [Contributing](#contributing)
+
+---
 
 ## Problem Description
 
@@ -48,6 +51,8 @@ Improve prediction accuracy.
 Explore how deep learning can handle the inherent unpredictability and dynamic nature of football matches.
 Gain insights into latent patterns that traditional methods may overlook.
 Despite the ever-changing dynamics of sports and the competitive nature of prediction markets, this project aspires to push the boundaries of sports analytics by integrating cutting-edge techniques. The ultimate goal is not only to enhance predictive performance but also to provide valuable insights into the factors driving match outcomes.
+
+---
 
 ## Data
 
@@ -135,42 +140,42 @@ The `train_model.py` script covers the following key steps:
 
 For more details, see the [train_model.py](scripts/train_model.py) script.
 
-#### Extra Notes for Picking models
+### Extra Notes for Picking models
 
 In the `04_train_model.ipynb` notebook, we trained various machine learning models on the dataset. Here are the key steps:
 
-1. **Model Training Tryouts (Dense NN, CNN, LSTM, TCNs, LSTM with Attention)**:
+1. #### **Model Training Tryouts (Dense NN, CNN, LSTM, TCNs, LSTM with Attention)**:
    - Models:
 
-     - **Dense Neural Network**: A simple feedforward neural network used as a baseline model.
+     - ##### **Dense Neural Network**: A simple feedforward neural network used as a baseline model.
 
      <div style="display: flex; justify-content: space-between;">
        <img src="images/dense_model_training_history.png" alt="Dense Model Training History" width="45%">
        <img src="images/dense_model_confusion_matrix.png" alt="Dense Model Confusion Matrix" width="45%">
      </div>
 
-     - **Convolutional Neural Network (CNN)**: Used to capture spatial patterns in the data.
+     - #### **Convolutional Neural Network (CNN)**: Used to capture spatial patterns in the data.
 
      <div style="display: flex; justify-content: space-between;">
        <img src="images/cnn_model_training_history.png" alt="CNN Model Training History" width="45%">
        <img src="images/cnn_model_confusion_matrix.png" alt="CNN Model Confusion Matrix" width="45%">
      </div>
 
-     - **Long Short-Term Memory (LSTM)**: Used for capturing temporal dependencies in the data.
+     - #### **Long Short-Term Memory (LSTM)**: Used for capturing temporal dependencies in the data.
 
      <div style="display: flex; justify-content: space-between;">
        <img src="images/lstm_model_training_history.png" alt="LSTM Model Training History" width="45%">
        <img src="images/lstm_model_confusion_matrix.png" alt="LSTM Model Confusion Matrix" width="45%">
      </div>
 
-     - **Temporal Convolutional Networks (TCNs)**: Combines the benefits of CNNs and RNNs for sequence modeling.
+     - #### **Temporal Convolutional Networks (TCNs)**: Combines the benefits of CNNs and RNNs for sequence modeling.
 
      <div style="display: flex; justify-content: space-between;">
        <img src="images/tcn_model_training_history.png" alt="TCN Model Training History" width="45%">
        <img src="images/tcn_model_confusion_matrix.png" alt="TCN Model Confusion Matrix" width="45%">
      </div>
 
-     - **LSTM with Attention Mechanism**: Enhances the LSTM model by focusing on important parts of the sequence.
+     - #### **LSTM with Attention Mechanism**: Enhances the LSTM model by focusing on important parts of the sequence.
 
      <div style="display: flex; justify-content: space-between;">
        <img src="images/lstm_attention_model_training_history.png" alt="LSTM Attention Model Training History" width="45%">
@@ -220,6 +225,67 @@ The `back_testing_market.py` script includes the following key steps:
 6. **Calculating Brier Scores**: Calculate the Brier scores for the market and the model to evaluate prediction accuracy.
 
 For more details, see the [back_testing_market.py](scripts/back_testing_market.py) script.
+
+#### Insights for back_testing_market
+
+In sports or betting, the Brier score evaluates how well a model predicts outcomes (e.g., home win, away win, or draw). Comparing a model's Brier score to a market's score (like bookmakers' predictions) helps determine which performs better
+
+### What is the Brier Score?
+
+The **Brier score** is a metric used to evaluate the accuracy of probabilistic predictions. It measures the **mean squared difference** between predicted probabilities and actual outcomes.
+
+#### Formula:
+
+---
+
+**Brier Score = (1/N) * Σ (forecastᵢ - outcomeᵢ)²**
+
+- **Forecast**: The predicted probability of an event occurring (e.g., 0.7 for "Team A wins").
+- **Outcome**: The actual result, represented as 1 if the event occurs or 0 if it does not.
+
+---
+
+### Interpretation:
+- **Range**: The Brier score ranges from **0 to 1**:
+  - **0**: Perfect predictions (all probabilities match actual outcomes exactly).
+  - **1**: The worst possible predictions.
+- **Lower scores are better**, as they indicate more accurate predictions.
+
+---
+
+### Use in Sports or Forecasting:
+In sports or betting, the Brier score evaluates how well a model predicts outcomes (e.g., home win, away win, or draw). Comparing a model's Brier score to a market's score (like bookmakers' predictions) helps determine which performs better.
+
+![Avg_brier_score](images/avg_brier_score_teams.png)
+
+- **key insights:**
+  - Teams with positive differences (e.g., Brentford, Norwich, Bournemouth): The model tends to perform better than the market (lower Brier score means better predictions) for these teams when they play at home.
+  - Teams with negative differences (e.g., West Brom, Man City): The market predictions outperform the model for these teams at home.
+  - Neutral performance: Teams like Liverpool show minimal difference, meaning the model's and market's accuracy are almost equivalent for these cases.
+
+![Distribution of Brier Score Differences](images/brier_scores_dist.png)
+
+- **Key insights:**
+  - The peak of the distribution is centered around 0, indicating that, on average, the model and market have similar accuracy.
+  - The spread shows a mix of cases where the model either outperforms or underperforms compared to the market:
+    - Negative differences: Indicate the market is more accurate.
+    - Positive differences: Indicate the model is more accurate.
+  - Extreme values on either side (e.g., -0.3 or 0.4) occur less frequently, indicating most predictions are relatively close.
+
+![Distribution of Brier Score Differences](images/heapmap_brierscores.png)
+
+- **Key insights:**
+  - Green areas (positive values): Indicate matchups where the model outperformed the market.
+    - Example: Brentford at home against certain teams performs exceptionally well.
+  - Red areas (negative values): Highlight matchups where the market predictions outperformed the model.
+    -Example: Sheffield United or Luton at home against specific teams.
+  - Neutral areas: Light yellow zones suggest similar performance between the model and the market for those matchups.
+
+
+- **Overall Interpretation**
+  - The model's performance varies by team and matchup. For some teams (e.g., Brentford, Norwich), the model is systematically better than the market, especially at home, while for others (e.g., Man City, West Brom), the market outperforms.
+  - The distribution graph suggests general parity between model and market accuracy, with differences clustering around zero and a smaller proportion of extreme cases.
+  - The heatmap offers granular insights, showing specific team matchups where one side (model or market) consistently performs better.
 
 ## Getting Started
 
@@ -366,7 +432,7 @@ curl -X POST http://127.0.0.1:9696/predict \
 
 ### Running the Streamlit App (Bonus)
 
-To run the Streamlit app locally, follow these steps:
+For fun you want to run a Streamlit app locally, follow these steps:
 
 1. Ensure you have all dependencies installed and the virtual environment activated as described in the [Installing Dependencies](#installing-dependencies) section.
 
@@ -378,8 +444,4 @@ To run the Streamlit app locally, follow these steps:
     streamlit run app.py
 ```
 
-![streamlit_app](images/streamlit_example.PNG)
-
-## Contributing
-
-Contributions are welcome! Please open an issue or submit a pull request for any improvements or bug fixes.
+![streamlit_app](images/images/streamlit.PNG)

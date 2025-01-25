@@ -21,6 +21,7 @@ ipykernel = "*"
 keras = "*"
 awsebcli = "*"
 keras-tuner = "*"
+streamlit = "*"
 
 [requires]
 python_version = "3.10"
